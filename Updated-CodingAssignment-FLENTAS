@@ -1,0 +1,52 @@
+/*
+ * Creation : 25 Apr 2020
+ */
+package com.assignment;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class MinimumCostToCrossRiverFlentasCodingAssignment {
+
+    public static int costToCrossRiver(int priceArr[]) {
+        // Sort price to get in ascending order
+        Arrays.sort(priceArr);
+        int cost = 0, i = priceArr.length - 1;
+        while (i > 1) {
+
+            if (i == 2) {
+                cost = cost + priceArr[0] + priceArr[2];
+            } else {
+                // person with low cost and high cost and twice of second low cost
+                int p1 = priceArr[i] + priceArr[0] + 2 * priceArr[1];
+                // Twice of low cost person with two high cost ppl
+                int p2 = priceArr[i] + priceArr[i - 1] + 2 * priceArr[0];
+                cost = cost + Math.min(p1, p2);
+            }
+            i = i - 2;
+        }
+        if (priceArr.length == 1) {
+            cost = cost + priceArr[0];
+
+        } else {
+            cost = cost + priceArr[1];
+        }
+        return cost;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int test_cases = sc.nextInt();
+        for (int i = 0; i < test_cases; i++) {
+            int numOfpersons = sc.nextInt();
+            int cost[] = new int[numOfpersons];
+            for (int j = 0; j < numOfpersons; j++)
+                cost[j] = sc.nextInt();
+            int priceCost = costToCrossRiver(cost);
+            System.out.println(priceCost);
+
+        }
+
+    }
+
+}
